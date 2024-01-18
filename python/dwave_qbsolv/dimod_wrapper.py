@@ -31,12 +31,12 @@ class QBSolv(dimod.core.sampler.Sampler):
         warnings.warn(msg, DeprecationWarning, stacklevel=2)
         
         self.properties = {}
-        self.parameters = {'num_repeats': [],  'seed': [],  'algorithm': [],
+        self.parameters = {'num_repeats': [],  'num_solutions': [],  'seed': [],  'algorithm': [],
                            'verbosity': [],  'timeout': [],  'solver_limit': [],  'solver': [],
                            'target': [],  'find_max': [],  'sample_kwargs': []}
 
     @dimod.decorators.bqm_index_labels
-    def sample(self, bqm, num_repeats=50, seed=None, algorithm=None,
+    def sample(self, bqm, num_repeats=50, num_solutions = 20, seed=None, algorithm=None,
                verbosity=-1, timeout=2592000, solver_limit=None, solver=None,
                target=None, find_max=False, **sample_kwargs):
         """Sample low-energy states defined by a QUBO using qbsolv.
@@ -98,7 +98,7 @@ class QBSolv(dimod.core.sampler.Sampler):
 
         # pose the QUBO to qbsolv
         Q, offset = bqm.to_qubo()
-        samples, energies, counts = run_qbsolv(Q=Q, num_repeats=num_repeats, seed=seed, algorithm=algorithm,
+        samples, energies, counts = run_qbsolv(Q=Q, num_repeats=num_repeats, num_solutions = num_solutions, seed=seed, algorithm=algorithm,
                                                verbosity=verbosity, timeout=timeout, solver_limit=solver_limit,
                                                solver=solver, target=target, find_max=find_max, sample_kwargs=sample_kwargs)
 

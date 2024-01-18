@@ -23,7 +23,7 @@ else:
 log = logging.getLogger(__name__)
 
 
-def run_qbsolv(Q, num_repeats=50, seed=17932241798878,  verbosity=-1,
+def run_qbsolv(Q, num_repeats=50, num_solutions=20, seed=17932241798878,  verbosity=-1,
                algorithm=None, timeout=2592000, solver_limit=None,
                solver=None, target=None, find_max=False, sample_kwargs={}):
     """Entry point to `solve` method in the qbsolv library.
@@ -87,7 +87,7 @@ def run_qbsolv(Q, num_repeats=50, seed=17932241798878,  verbosity=-1,
     Verbose_ = verbosity
 
     global algo_
-    cdef int n_solutions = 20  # the maximimum number of solutions returned
+    cdef int n_solutions = num_solutions # the maximimum number of solutions returned
     if algorithm is None or algorithm == ENERGY_IMPACT:
         algo_[0] = "o"
         algo_[1] = 0
@@ -95,7 +95,7 @@ def run_qbsolv(Q, num_repeats=50, seed=17932241798878,  verbosity=-1,
     elif algorithm == SOLUTION_DIVERSITY:
         algo_[0] = "d"
         algo_[1] = 0
-        n_solutions = 70
+        # n_solutions = 70
     else:
         raise ValueError('unknown algorithm given')
 
